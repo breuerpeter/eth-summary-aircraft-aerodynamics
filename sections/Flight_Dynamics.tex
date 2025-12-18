@@ -1,0 +1,329 @@
+\section{FLIGHT DYNAMICS}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $U$ & $\unit{m.s^{-1}}$ & Linear velocity in $x$ direction\\
+        $V$ & $\unit{m.s^{-1}}$ & Linear velocity in $y$ direction\\
+        $W$ & $\unit{m.s^{-1}}$ & Linear velocity in $z$ direction\\
+        $L_A$ & $\unit{Nm}$ & Aerodynamic rolling moment\\
+        $L_T$ & $\unit{Nm}$ & Thrust rolling moment\\
+        $M_A$ & $\unit{Nm}$ & Aerodynamic pitching moment\\
+        $M_T$ & $\unit{Nm}$ & Thrust pitching moment\\
+        $N_A$ & $\unit{Nm}$ & Aerodynamic yawing moment\\
+        $N_T$ & $\unit{Nm}$ & Thrust yawing moment\\
+        $(\psi, \theta, \phi)$ & $\unit{rad}$ & $ZYX$-Euler angles (yaw, pitch, roll)\\
+        $I_{ij}$ & $\unit{kg.m.s^2}$ & Moment of inertia entry $(i,j)$\\
+        $\Vec{R}$ & $\unit{N.m^{-3}}$ & Gravity (body force) vector\\
+        $\Vec{F}_A$ & $\unit{N.m^{-2}}$ & Aerodynamic force/pressure vector\\
+        $\Vec{F}_T$ & $\unit{N.m^{-2}}$ & Thrust force/pressure vector\\
+        $\Vec{F}$ & $\unit{N.m^{-2}}$ & External force/pressure vector\\
+        $\Vec{M}_A$ & $\unit{Nm}$ & Aerodynamic moments vector\\
+        $\Vec{M}_T$ & $\unit{Nm}$ & Thrust moments vector\\
+    \end{tabularx}
+\end{whitebox}
+
+\blue{Notation}
+\begin{itemize}
+    \item $(x',y',z')$ is NED (inertial) frame $\mathcal{I}$
+    \item Frame $1$ is inertial frame translated to $P$
+    \item Frames $2$ \& $3$ are intermediate frames after rotations
+    \item $(x,y,z)$ is body axis frame $\mathcal{B}$ with origin $P$ in CG
+    \item Infinitesimal mass element $dm$ of airplane at position $\Vec{r}$\\
+    \item $\Vec{v}_P=
+    \begin{bmatrix}
+        U & V & W
+    \end{bmatrix}^T$
+     \item $\Vec{\dot{v}}_P=
+    \begin{bmatrix}
+        \dot{U} & \dot{V} & \dot{W}
+    \end{bmatrix}^T$
+     \item $\Vec{\omega}=
+    \begin{bmatrix}
+        P & Q & R
+    \end{bmatrix}^T$
+    $=\prescript{}{1}{\Vec{\dot{\psi}}}+\prescript{}{2}{\Vec{\dot{\theta}}}+\prescript{}{3}{\Vec{\dot{\phi}}}$
+\end{itemize}
+
+\begin{whitebox}{$\mathbf{ZYX}$\textbf{ EULER / TAIT-BRYAN ANGLES}}
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+        trim = {0.0cm, 0.0cm, 0.0cm, 0.0cm}, % left, bottom, right, top
+        clip
+        ]{Diagram_Euler_321.pdf}
+    }
+\end{whitebox}
+    
+\begin{highlightbox}{\textbf{ROTATIONS}}
+    \begin{align*}
+        &R_{z_1}(\psi)=
+        \begin{bmatrix}
+            \cos\psi & -\sin\psi & 0\\
+            \sin\psi & \cos\psi & 0\\
+            0 & 0 & 1
+        \end{bmatrix}\\
+        &R_{y_2}(\theta)=
+        \begin{bmatrix}
+            \cos\theta & 0 & \sin\theta\\
+            0 & 1 & 0\\
+            -\sin\theta & 0 & \cos\theta
+        \end{bmatrix}\\
+        &R_{x_3}(\phi)=
+        \begin{bmatrix}
+            1 & 0 & 0\\
+            0 & \cos\phi & -\sin\phi\\
+            0 & \sin\phi & \cos\phi
+        \end{bmatrix}\\
+        &R(\phi,\theta,\psi)=R_{z_1}(\psi)R_{y_2}(\theta)R_{x_3}(\phi)\\
+        &\prescript{}{\mathcal{I}}{\vec{r}}=\prescript{}{\mathcal{I}}{\vec{r}}_P+R(\phi,\theta,\psi)\prescript{}{\mathcal{B}}{\vec{r}}\\
+        &\prescript{}{\mathcal{I}}{\vec{v}}_P=R(\phi,\theta,\psi)\prescript{}{\mathcal{B}}{\vec{v}}_P
+    \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{\textbf{GRAVITY}}
+    \begin{align*}
+        &g_x=-g\sin\theta\\
+        &g_y=g\sin\phi\sin\theta\\
+        &g_z=g\cos\phi\cos\theta
+    \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{\textbf{MOMENTS OF INERTIA}}
+    \begin{align*}
+        I=
+        \begin{bmatrix}
+            I_{xx} & 0 & I_{xz}\\
+            0 & I_{yy} & 0\\
+            I_{zx} & 0 & I_{zz}
+        \end{bmatrix}
+    \end{align*}
+    \begin{align*}
+        &I_{xx}=\int_V(y^2+z^2)\rho_AdV\\
+        &I_{xy}=\int_Vxy\rho_AdV\\
+        &I_{xz}=\int_Vxz\rho_AdV
+    \end{align*}
+    \begin{align*}
+        &I_{yy}=\int_V(x^2+z^2)\rho_AdV\\
+        &I_{yx}=I_{xy}=\int_Vxy\rho_AdV\\
+        &I_{yz}=\int_Vyz\rho_AdV
+    \end{align*}
+    \begin{align*}
+        &I_{zz}=\int_V(x^2+y^2)\rho_AdV\\
+        &I_{zx}=I_{xz}=\int_Vxz\rho_AdV\\
+        &I_{zy}=I_{yz}=\int_Vyz\rho_AdV
+    \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{FORCES}
+    \begin{align*}
+        & m(\dot{U}-V R+W Q)=-m g \sin (\theta)+F_{A_x}+F_{T_x}\\
+        & m(\dot{V}+U R-W P)=m g \sin (\phi) \cos (\theta)+F_{A_y}+F_{T_y}\\
+        & m(\dot{W}-U Q+V P)=m g \cos (\phi) \cos (\theta)+F_{A_z}+F_{T_z}
+    \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{MOMENTS}
+    \begin{align*}
+        I_{x x} \dot{P}-I_{x z} \dot{R}-I_{x z} P Q+\left(I_{z z}-I_{y y}\right) R Q & =L_A+L_T\\
+        I_{y y} \dot{Q}+\left(I_{x x}-I_{z z}\right) P R+I_{x z}\left(P^2-R^2\right) & =M_A+M_T\\
+        I_{z z} \dot{R}-I_{x z} \dot{P}+\left(I_{y y}-I_{x x}\right) P Q+I_{x z} Q R & =N_A+N_T
+    \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{ANGULAR RATES}
+    \begin{align*}
+        &P=\dot{\phi}+\dot{\psi} \sin (\theta)\\
+        &Q=\dot{\theta} \cos (\phi)+\dot{\psi} \cos (\theta) \sin (\phi)\\
+        &R=\dot{\psi} \cos (\theta) \cos (\phi)-\dot{\theta} \sin (\phi)\\
+        &\begin{bmatrix}
+            P\\
+            Q\\
+            R
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1 & 0 & -\sin\theta\\
+            0 & \cos\phi & \cos\theta\sin\phi\\
+            0 & -\sin\phi & \cos\theta\cos\phi
+        \end{bmatrix}
+        \begin{bmatrix}
+            \dot{\phi}\\
+            \dot{\theta}\\
+            \dot{\psi}
+        \end{bmatrix}\\
+        &\dot{\phi}=P+Q\sin\phi\tan\theta+R\cos\phi\tan\theta\\
+        &\dot{\theta}=Q\cos\phi-R\sin\phi\\
+        &\dot{\psi}=(Q\sin\phi+R\cos\phi)\frac{1}{\cos\theta}
+    \end{align*}
+\end{highlightbox}
+
+\blue{Notation}
+\begin{itemize}
+    \item $\int_V(\cdot)dV$ is volume integral
+    \item $\int_S(\cdot)dS$ is surface integral
+\end{itemize}
+
+\blue{Assumptions}\\
+\begin{itemize}
+    \item Airplane is rigid body
+    \item Airplane is symmetric in $XY$ plane $\Rightarrow I_{xz}=I_{qz}=0$
+\end{itemize}
+
+\blue{Properties}\\
+\begin{itemize}
+    \item $P$ is CG $\Rightarrow\int_V\prescript{}{\mathcal{B}}{\Vec{r}}\rho_AdV=0$
+\end{itemize}
+
+\begin{highlightbox}{MASS}
+        \begin{align*}
+            m=\int_V\rho_AdV
+        \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{CG}
+        \begin{align*}
+            \prescript{}{\mathcal{I}}{\vec{r}}_P=\frac{1}{m}\int_V\rho_A\prescript{}{\mathcal{I}}{\vec{r}}dV
+        \end{align*}
+\end{highlightbox}
+
+\begin{whitebox}{\textbf{EXTERNAL FORCES}}
+    \begin{highlightbox}{GRAVITY (BODY FORCE)}
+        \begin{align*}
+            \Vec{R}=\rho_A\Vec{g}
+        \end{align*}
+    \end{highlightbox}
+    \begin{highlightbox}{AERODYNAMICS AND THRUST}
+        \begin{align*}
+            \Vec{F}=\Vec{F}_A+\Vec{F}_T
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{LINEAR MOMENTUM}}
+    \begin{highlightbox}{CONSERVATION (EULER'S FIRST LAW)}
+        \begin{align*}
+            \frac{d}{dt}\left(m\frac{d\Vec{r}}{dt}\right)=\sum\text{External forces}
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        \frac{d}{dt}\int_V\rho_A\frac{d\prescript{}{\mathcal{I}}{\vec{r}}}{dt}dV=\int_V \rho_A\vec{g}dV+\int_S\vec{F}dS
+    }
+    \mathbox{
+        m\frac{d}{dt}\frac{d\prescript{}{\mathcal{I}}{\vec{r}}_P}{dt}=m\Vec{g}+\Vec{F}_A+\Vec{F}_T
+    }
+    
+    \blue{Notation}
+    \begin{itemize}
+        \item $\prescript{}{\mathcal{I}}{\Vec{v}}_P=\frac{d\prescript{}{\mathcal{I}}{\vec{r}}_P}{dt}$
+    \end{itemize}
+    
+    \blue{Property} 
+    \begin{itemize}
+        \item $\frac{d}{dt}\prescript{}{\mathcal{I}}{\Vec{v}}_P=\frac{d}{dt}\prescript{}{\mathcal{B}}{\Vec{v}}_P+\Vec{\omega}\times\prescript{}{\mathcal{I}}{\Vec{v}}_P=\prescript{}{\mathcal{B}}{\Vec{\dot{v}}}_P+\Vec{\omega}\times\prescript{}{\mathcal{I}}{\Vec{v}}_P$
+    \end{itemize}
+    
+    \mathbox{
+        m(\prescript{}{\mathcal{B}}{\Vec{\dot{v}}}_P+\Vec{\omega}\times\prescript{}{\mathcal{I}}{\Vec{v}}_P)=mg+\Vec{F}_A+\Vec{F}_T
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{ANGULAR MOMENTUM}}
+    \begin{highlightbox}{CONSERVATION (EULER'S SECOND LAW)}
+        \begin{align*}
+            \frac{d}{dt}\left(\Vec{r}\times m\frac{d\Vec{r}}{dt}\right)=\sum\text{Moments}
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        \frac{d}{dt}\int_V\prescript{}{\mathcal{I}}{\vec{r}}\times\rho_A\frac{d \prescript{}{\mathcal{I}}{\vec{r}}}{dt}dV=\int_V\prescript{}{\mathcal{I}}{\vec{r}}\times\rho_A \vec{g}dV+\int_S\prescript{}{\mathcal{I}}{\vec{r}}\times\vec{F}dS
+    }
+    \mathbox{
+        \int_S\prescript{}{\mathcal{I}}{\vec{r}}\times\vec{F}dS=\Vec{M}_A+\Vec{M}_T
+    }
+    
+    \blue{Property}
+    \begin{itemize}
+        \item $\prescript{}{\mathcal{I}}{\vec{r}}=\prescript{}{\mathcal{I}}{\vec{r}}_P+\Vec{r}$
+    \end{itemize}
+    
+    \mathbox{
+        \frac{d}{dt}\int_V\prescript{}{\mathcal{I}}{\vec{r}}\times\rho_A\frac{d \prescript{}{\mathcal{I}}{\vec{r}}}{dt}dV=\frac{d}{dt}\int_V\prescript{}{\mathcal{B}}{\vec{r}}\times\rho_A\frac{d\prescript{}{\mathcal{B}}{\vec{r}}}{dt}dV\\
+    }
+    \mathbox{
+        \frac{d}{dt}\int_V\prescript{}{\mathcal{B}}{\vec{r}}\times\rho_A\frac{d\vec{r}}{dt}dV=\Vec{M}_A+\Vec{M}_T\\
+    }
+    \blue{Property}
+    \begin{itemize}
+        \item $\frac{d}{dt}\prescript{}{\mathcal{I}}{\Vec{r}}=\frac{d}{dt}\prescript{}{\mathcal{B}}{\Vec{r}}+\Vec{\omega}\times\prescript{}{\mathcal{I}}{\Vec{r}}=\prescript{}{\mathcal{B}}{\Vec{\dot{r}}}+\Vec{\omega}\times\prescript{}{\mathcal{I}}{\Vec{r}}$
+        \item Rigid body $\Rightarrow\prescript{}{\mathcal{B}}{\Vec{\dot{r}}}=0,\prescript{}{\mathcal{B}}{\Vec{\ddot{r}}}=0$
+    \end{itemize}
+
+    \mathbox{
+        \int_V \prescript{}{\mathcal{B}}{\Vec{r}} \times(\overrightarrow{\dot{\omega}} \times \prescript{}{\mathcal{B}}{\Vec{r}}+\vec{\omega} \times(\vec{\omega} \times \prescript{}{\mathcal{B}}{\Vec{r}})) \rho_AdV=\vec{M}_A+\vec{M}_T
+    }
+    \blue{Property}
+    \begin{itemize}
+        \item $\vec{a} \times(\vec{b} \times \vec{c})=\vec{b}(\vec{a} \cdot \vec{c})-\vec{c}(\vec{a} \cdot \vec{b})$
+    \end{itemize}
+
+    \mathbox{
+        \int_V \vec{r} \times(\overrightarrow{\dot{\omega}} \times \vec{r}) \rho_AdV\\
+        =\int_V \overrightarrow{\dot{\omega}} \cdot(\vec{r} \cdot \vec{r}) \rho_AdV-\int_V \vec{r} \cdot(\vec{r} \cdot \overrightarrow{\dot{\omega}}) \rho_AdV\\
+        =
+        \begin{bmatrix}
+            \dot{P}I_xx-\dot{Q}I_{xy}-\dot{R}I_{xz}\\
+            \dot{Q}I_{yy}-\dot{P}I_{xy}-\dot{R}I_{yz}\\
+            \dot{R}I_{zz}-\dot{P}I_{xz}-\dot{Q}I_{yz}\\
+        \end{bmatrix}
+    }
+    
+    \blue{Property}
+    \begin{itemize}
+        \item $\Vec{a}\times\Vec{a}=0$
+    \end{itemize}
+    
+    \mathbox{
+        \int_V\Vec{r}\times(\Vec{\omega}\times(\Vec{\omega}\times\Vec{r}))\rho_AdV\\
+        =
+        \begin{bmatrix}
+            I_{xy}PR+I_{yz}(R^2-Q^2)-I_{xz}PQ+RQ(I_{zz}-I_{yy})\\
+            (I_{xx}-I_{zz})PR+I_{xz}(P^2-R^2)-I_{xy}QR+I_{yz}PQ\\
+            (I_{yy}-I_{xx})PQ+I_{xy}(Q^2-P^2)+I_{xz}QR-I_{qz}PR
+        \end{bmatrix}
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{STATIONARY FLIGHT}}
+    \blue{Conditions}
+    \begin{itemize}
+        \item Constant variables in body frame
+        \begin{itemize}
+            \item $\prescript{}{\mathcal{B}}{\Vec{v}}_P=$ const. $\Rightarrow\prescript{}{\mathcal{B}}{\Vec{\dot{v}}}_P=0$\\
+            \item $\prescript{}{\mathcal{B}}{\Vec{\omega}}_P=$ const. $\Rightarrow\prescript{}{\mathcal{B}}{\Vec{\dot{\omega}}}_P=0$
+        \end{itemize}
+    \end{itemize}
+
+    \begin{whitebox}{STATIONARY STRAIGHT FLIGHT}
+        \blue{Conditions}\\
+        \begin{itemize}
+            \item Zero body axis rates: $P=Q=R=0$
+            \item Zero Euler angle rates: $\dot{\phi}=\dot{\theta}=\dot{\psi}=0$
+        \end{itemize}
+    \end{whitebox}
+    \begin{whitebox}{STATIONARY HORIZONTAL TURN}
+        \blue{Conditions}\\
+        \begin{itemize}
+            \item Only yaw angle changes:  $\dot{\phi}=\dot{\theta}=0$\\
+            \item $\Vec{\omega}=\pm\dot{\psi}\prescript{}{\mathcal{I}}{\Vec{e}}_z$
+        \end{itemize}
+    \end{whitebox}
+    \begin{whitebox}{PULL UP}
+        \blue{Conditions}\\
+        \begin{itemize}
+            \item No lateral motion: $V=0$
+            \item Straight flight: $P=R=0$
+            \item No roll: $\phi=0$
+        \end{itemize}
+    \end{whitebox}
+\end{whitebox}
+    
+
+

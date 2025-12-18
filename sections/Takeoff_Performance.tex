@@ -1,0 +1,70 @@
+\section{TAKEOFF PERFORMANCE}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $V_{stall}$ & $\unit{m.s^{-1}}$ & Stall speed\\
+        $V_1$ & $\unit{m.s^{-1}}$ & Decision speed\\
+        $V_R$ & $\unit{m.s^{-1}}$ & Rotation speed\\
+        $V_{mu}$ & $\unit{m.s^{-1}}$ & Minimum unstick speed\\
+        $V_{LOF}$ & $\unit{m.s^{-1}}$ & Liftoff speed\\
+        $V_2$ & $\unit{m.s^{-1}}$ & Takeoff safety speed\\
+        $h_{obs}$ & $\unit{m}$ & Obstacle height\\
+        $\mu$ & $-$ & Ground friction coefficient\\
+        $t_R$ & $\unit{s}$ & Time to takeoff\\
+        $s_R$ & $\unit{s}$ & Distance to takeoff\\
+        $\alpha_{tailstrike}$ & $\unit{rad}$ & Angle of attack causing tailstrike\\
+        $\alpha_{\max}$ & $\unit{rad}$ & Angle of attack corresponding to $c_{L,\max}$\\
+        $c_{D i,IGE}$ & $-$ & Induced drag coefficient in ground effect
+    \end{tabularx}
+\end{whitebox}
+
+\resizebox{0.9\linewidth}{!}{
+    \includegraphics[
+    page = {25},
+    trim = {1.5cm, 8.0cm, 3.5cm, 2.5cm}, % left, bottom, right, top
+    clip
+    ]{Lecture02.pdf}
+}
+
+\resizebox{0.9\linewidth}{!}{
+    \includegraphics[
+    page = {21},
+    trim = {1.8cm, 5.0cm, 1.0cm, 8.0cm}, % left, bottom, right, top
+    clip
+    ]{Lecture02.pdf}
+}
+
+\begin{highlightbox}{\textbf{GROUND ROLL}}
+    \begin{align*}
+        &T-D-\mu(mg-L)=F_{res}=m\frac{dV}{dt}\\
+        &t_R=\int_0^{t_R} d t=m \int_0^{V_{L O F}} \frac{1}{F_{r e s}} d V\\
+        &s_R=\int_0^{t_R} V d t=m \int_0^{V_{L O F}} \frac{V}{F_{\text {res }}} d V
+    \end{align*}
+\end{highlightbox}
+
+
+\begin{whitebox}{\textbf{TAILSTRIKE}}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $\alpha_{tailstrike}<\alpha_{max}$
+        \item $c_{L,mu}<c_{L,max}$
+    \end{itemize}
+    \begin{highlightbox}{}
+        \begin{align*}
+            &V_{m u}=\sqrt{\frac{2 m g}{\rho S_{r e f} c_{L, m u}}}>V_{stall}=\sqrt{\frac{2 m g}{\rho S_{r e f} c_{L, \max }}}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{GROUND EFFECT}}
+    \blue{Conditions}
+    \begin{itemize}
+        \item $h\leq\sfrac{1}{2}$ wingspan
+    \end{itemize}
+    
+    \begin{highlightbox}{}
+        \begin{align*}
+            \frac{c_{D i,IGE}}{c_{D i}}=\frac{\left(16 \frac{h}{b}\right)^2}{1+\left(16 \frac{h}{b}\right)^2}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}

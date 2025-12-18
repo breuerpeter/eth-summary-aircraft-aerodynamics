@@ -1,0 +1,208 @@
+\section{UNCONSTRAINED LQR CONTROL}
+
+\begin{whitebox}{\textbf{LINEAR QUADRATIC OPTIMAL CONTROL}}
+    \begin{minipage}[t]{0.45\linewidth}
+        \blue{Dynamics}
+        \mathbox{
+            x_{i+1} = A x(k) + Bu(k)
+        }
+    \end{minipage}
+    \begin{minipage}[t]{0.50\linewidth}
+        \blue{Constraints} \\
+        \textbf{NONE} for state \textbf{OR} input \\
+    \end{minipage}
+    
+    \vspace{0.25em}
+    
+    \blue{Goal} $\leadsto$ minimize \textbf{Quadratic Cost} subj. to dynamics
+    \mathboxplus{
+        J^\star(x(0)) := \mathop{\mathrm{min}}_U \left[ x_N^\top P x_N + \textstyle\sum_{i=0}^{N-1}(x_i^\top Q x_i + u_i^\top R u_i) \right]
+    }
+
+    \begin{minipage}[c]{0.32\linewidth}
+        \footnotesize
+        \begin{itemize}[leftmargin=1em]
+            \item $N:$ horizon length
+            \item $P \succeq 0, \quad P=P^\top$
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}[c]{0.32\linewidth}
+        \footnotesize
+        \begin{itemize}[leftmargin=1em]
+            \item $Q \succeq 0, \quad Q=Q^\top$
+            \item $R \succ 0, \quad R=R^\top$
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}[c]{0.32\linewidth}
+        \footnotesize
+        \begin{itemize}[leftmargin=1em]
+            \item $x(0)$: \textbf{current} state
+            \item $x_i, u_i$: \textbf{opt.} variable
+        \end{itemize}
+    \end{minipage}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{BATCH APPROACH}}
+    \blue{Idea} explicitly represent $x_i \in \mathbb{R}^n$ through $x_0$ \& $u_i \in \mathbb{R}^m$
+    \mathbox{
+        \underbrace{
+            \begin{bmatrix}
+                x_0 \\
+                \vdots \\
+                x_N
+            \end{bmatrix}
+        }_{X}
+        =
+        \underbrace{
+            \begin{bmatrix}
+                \mathbb{I} \\
+                A \\
+                \vdots \\
+                A^N
+            \end{bmatrix}
+        }_{\mathcal{S}^x \ \in \ \mathbb{R}^{(N+1)n \times n}}
+        x(0) +
+        \underbrace{
+            \begin{bmatrix}
+                0 & \cdots & 0\\
+                B & \cdots & 0 \\
+                \vdots & \ddots & 0 \\
+                A^{N-1}B & \cdots & B
+            \end{bmatrix}
+        }_{\mathcal{S}^u \ \in \ \mathbb{R}^{(N+1)n \times Nm}}
+        \underbrace{
+            \begin{bmatrix}
+                u_0 \\
+                u_1 \\
+                \vdots \\
+                u_{N-1}
+            \end{bmatrix}
+        }_{U}
+    }
+    \blue{Cost} $\overline{Q} := \mathop{\mathrm{blockdiag}}(Q,\dots, Q,P)$ \& $\overline{R} := \mathop{\mathrm{blockdiag}}(R,\dots, R)$
+    \blue{Optimal Input}
+    \mathboxplus{
+        U^\star(x(0)) =
+        - {\underbrace{\bigl( (\mathcal{S}^u)^\top \overline{Q} \mathcal{S}^u + \overline{R} \bigr)}_{H \text{ (Hessian)}}}^{-1}
+        \underbrace{(\mathcal{S}^u)^\top \overline{Q}\mathcal{S}^x}_{F^\top} x(0)
+    }
+    \blue{Optimal Cost}
+    \mathboxplus{
+        J^\star(x(0)) = x(0)^\top \! \left[ \scriptstyle \mathcal{S}_x^\top \overline{Q} \mathcal{S}_x - \mathcal{S}_x^\top \overline{Q} \mathcal{S}_u \left( \mathcal{S}_u^\top \overline{Q} \mathcal{S}_u + \overline{R} \right)^{-1} \mathcal{S}_u^\top  \overline{Q} \mathcal{S}_x \right] \! x(0)
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{RECURSIVE APPROACH}}
+    \begin{minipage}[c]{0.73\linewidth}
+        \footnotesize
+        \blue{Idea} apply DPOC $\leadsto$ solve j-step optimal cost-to-go
+        \mathbox{
+            J_j^\star(x(j)) := \mathop{\mathrm{min}}_{U_{j\to N}} x_N^\top P x_N \!+\! \sum_{i=j}^{N-1}(x_i^\top Q x_i \!+\! u_i^\top R u_i)
+        }
+    \end{minipage}
+    \begin{minipage}[c]{0.25\linewidth}
+        \begin{algorithmic}
+            \footnotesize
+            \State $P \leftarrow P_N$
+            % \Loop
+            \For{$i=N:1$}
+            \State $F \leftarrow f(P)$
+            \State $P \leftarrow f(F)$
+            \EndFor
+            % \EndLoop
+        \end{algorithmic}
+    \end{minipage}
+
+    \vspace{0.25em}
+
+    \blue{Optimal Control Policy}
+    \mathboxplus{
+        u_i^\star = -(B^\top P_{i+1}B + R)^{-1} B^\top P_{i+1} A \cdot x(i) := F_i x_i
+    }
+
+    \blue{Optimal Cost-To-Go} $J_i^\star(x_i) = x_i^\top P_i x_i$
+    
+    
+    \blue{RDE -- Riccati Difference Equation} $(\mathbf{P_N} = \mathbf{P})$
+    \mathboxplus{
+        P_i = A^\top P_{i+1} A \!+\! Q \!-\! A^\top P_{i+1} B (B^\top P_{i+1} B \!+\! R)^{-1} B^\top P_{i+1} A
+    }
+    {\footnotesize 
+    \begin{minipage}[c]{0.28\linewidth}
+        \blue{Numerically Safer Alternative}
+    \end{minipage}
+    \begin{minipage}[c]{0.70\linewidth}
+        \mathbox{
+            P_i = Q + F_{i}^\top R F_{i} + (A+B F_{i})^\top P (A+B F_{i})
+        }
+    \end{minipage}
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{COMPARISON -- BATCH VS RECURSIVE}}
+    \footnotesize
+    \begin{itemize}[leftmargin=1em]
+        \item \textbf{Return}
+        \begin{itemize}
+            \item \textbf{Batch} -- sequence of numeric values $U^\star$
+            \item \textbf{Recursive} -- feedback policies $u_i^\star$
+        \end{itemize}
+        \item Control actions identical if perfect model
+        \item \textbf{Disturbances} -- Recursive more robust to disturbances
+        \item \textbf{Computational efficiency}
+        \begin{itemize}
+            \item Recursive more efficient for large $N$
+            \item Matrix inversion in Batch approach expensive
+        \end{itemize}
+        \item \textbf{Constraints} -- \textbf{Neither} works with constraints on $x_i$ or $u_i$
+        \item \textbf{Batch Approach easier to adapt when contraints are present} \\
+        constrained minimization (solving for $J_{i+1}$ with constraints) hard
+    \end{itemize}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{RHC -- RECEDING HORIZON CONTROL}}
+    \footnotesize
+    \begin{minipage}[c]{0.28\linewidth}
+        \blue{Idea} Compute opt. sequence over \\
+        N-step horizon
+    \end{minipage}
+    \begin{minipage}[c]{0.70\linewidth}
+        \mathboxplus{
+            U^{\star}:= \mathrm{argmin} \ &x_{N}^{\top} P x_{N}+ \textstyle\sum_{i=0}^{N-1} x_{i}^{\top} Q x_{i}+u_{i}^{\top} R u_{i} \\ 
+            \mathrm{subj.\ to }\ &x_{i+1}=A x_{i}+B u_{i} \quad \Rightarrow U^\star
+        }
+    \end{minipage}
+
+    \vspace{0.25em}
+    \begin{itemize}[leftmargin=1em]
+        \item Extract first input in sequence: $U^\star = \{ u_0^\star,\ldots,u_{N-1}^\star \} \Rightarrow u_0^\star$
+        \item Introduce feedback to sys: $x(k+1)=Ax(k)+Bu(k) \Rightarrow x$
+    \end{itemize}
+    \blue{Why Reoptimize} Provides robustness to noise / modeling errors, \\
+    Sol'n at k subopt. (finite horizon) $\leadsto$ reopt. potentially better performance
+    
+\end{whitebox}
+\begin{whitebox}{\textbf{INFINITE HORIZON LQR}}
+    \footnotesize
+    \begin{itemize}[leftmargin=1em]
+        \item \textbf{Cost} Let $N\to\infty \leadsto$ $J_\infty(x(0)) = \min_u \sum_{i=0}^{\infty} x_i^\top Q x_i + u_i^\top R u_i$
+        \item RDE satisfied with $P_i = P_{i+1} = P_\infty$
+        \item \textbf{Input} Feedback matrix $F_\infty \leadsto u^\star(k) := F_\infty x(k)$
+    \end{itemize}
+    \blue{LQR Lyapunov Function}
+    \begin{highlightbox}{}
+        If $(A,B)$ stabilizable, $(Q^{1/2},A)$ detectable $\leadsto$ $J^\star(x) = x^\top P_\infty x$
+        is Lyap. func. for system $x^{+} = (A+BF_\infty)x$
+    \end{highlightbox}
+    \blue{Choice of P in Finite Horizon Control}
+    \begin{whitebox}{}
+        \begin{itemize}[leftmargin=1em]
+            \item Can choose to match $\infty$-Horizon sol'n $\leadsto$ Make $P \approx J_{N\to\infty}$ with ARE
+            \item Can Choose $P$ assuming no control action after end of horizon \\
+            This $P$ determined from solving Lyap eqn $A^\top P A + Q = P$ \\
+            \textbf{Only makes sense if system asympt. stable}
+            \item Assume we want state and input both to be $0$ at end of horizon $\leadsto$ no $P$ but extra constraint $x_{i+N}=0$
+        \end{itemize}
+    \end{whitebox}
+    
+\end{whitebox}

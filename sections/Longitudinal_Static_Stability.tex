@@ -1,0 +1,280 @@
+\section{LONGITUDINAL STATIC STABILITY}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $\alpha_W$ & $\unit{rad}$ & Wing angle of attack\\
+        $\alpha_{0,W}$ & $\unit{rad}$ & Zero lift Wing angle of attack\\
+        $\alpha_H$ & $\unit{rad}$ & HTP angle of attack\\
+        $\epsilon_W$ & $\unit{rad}$ & Wing installation angle\\
+        $\epsilon_H$ & $\unit{rad}$ & HTP installation angle\\
+        $\epsilon$ & $\unit{rad}$ & Downwash angle\\
+        $(\Tilde{x},\Tilde{y},\Tilde{z})_{CG}$ & $\unit{m}$ & Center of gravity position\\
+        $(\Tilde{x},\Tilde{y},\Tilde{z})_{NP}$ & $\unit{m}$ & Neutral point\\
+        $(\Tilde{x},\Tilde{y},\Tilde{z})_{AC,W}$ & $\unit{m}$ & Wing aerodynamic center (AC)\\
+        $(\Tilde{x},\Tilde{y},\Tilde{z})_{AC,H}$ & $\unit{m}$ & HTP AC\\
+        $l_{ref}$ & $\unit{m}$ & Wing reference length\\
+        $S_H$ & $\unit{m}$ & HTP reference area\\
+        $\bar{c}_H$ & $\unit{m}$ & HTP mean aerodynamic chord\\
+        $c_{M_{CG}}$ & $-$ & Pitching moment coeff. about CG\\
+        $c_{M_F}$ & $-$ & Fuselage pitching moment coeff.\\
+        $c_{T}$ & $-$ & Tangential force coeff.\\
+        $c_{N}$ & $-$ & Normal force coeff.\\
+        $V_H$ & $-$ & Horizontal tail volume coeff.\\
+        $\tilde{x}_{NP}$ & $\unit{m}$ & Neutral point\\
+        $SM$ & $\% MAC$ & Static margin\\
+        $\alpha_{0}$ & $\unit{rad}$ & Zero-lift angle of attack\\
+        $\Delta\epsilon_H$ & $\unit{rad}$ & HTP trim angle\\
+        $\tau$ & $-$ & TODO\\
+        $\delta_e$ & $\unit{rad}$ & Elevator control effectiveness
+    \end{tabularx}
+\end{whitebox}
+
+\resizebox{1.0\linewidth}{!}{
+    \includegraphics[
+    page = {6},
+    trim = {1.cm, 1.0cm, 0.5cm, 3.5cm}, % left, bottom, right, top
+    clip
+    ]{Lecture06.pdf}
+}
+
+\blue{Conditions}
+\begin{itemize}
+    \item Initial flight state is stationary level flight
+\end{itemize}
+
+\blue{Assumptions}
+\begin{itemize}
+    \item Aircraft is rigid body
+    \item Arbitrary fuselage reference line (FRL)
+    \item No influence from engines, aerodynamic forces
+    \item Moments of components act through their AC
+    \item $L$ \& $D$ depend on $\alpha$ / $c_L$
+\end{itemize}
+
+\blue{Notation}
+\begin{itemize}
+    \item Subscript $W=$ wing
+    \item Subscript $H=$ HTP
+    \item Subscript $F=$ fuselage
+\end{itemize}
+
+\begin{highlightbox}{POSITIVE LONGITUDINAL STATIC STABILITY}
+    \begin{align*}
+        c_{M_\alpha}=\frac{dc_M}{d\alpha}<0
+    \end{align*}
+    
+\end{highlightbox}
+
+\begin{whitebox}{\textbf{PITCHING MOMENT COEFFICIENT}}
+
+\begin{highlightbox}{}
+    \begin{align}
+        \label{eq:pitching_moment_coeff}
+        &c_{M_{CG}}=c_{M_{CG,W}}+\eta_Hc_{M_{CG,H}}+c_{M_{CG,F}},\quad\eta_H=\frac{q_H}{q_\infty}\\
+        \label{eq:pitching_moment_coeff_deriv}
+        &\frac{dc_{M_{CG}}}{dc_L}=\frac{dc_{M_{CG,W}}}{dc_L}+\eta_H\frac{dc_{M_{CG,H}}}{dc_L}+\frac{dc_{M_{CG,F}}}{dc_L}
+    \end{align}
+\end{highlightbox}
+
+TODO: CLEAR DIAGRAMS
+
+\resizebox{1.0\linewidth}{!}{
+    \includegraphics[
+    page = {23},
+    trim = {3.5cm, 7.7cm, 2.8cm, 2.5cm}, % left, bottom, right, top
+    clip
+    ]{Lecture06.pdf}
+}
+    
+\begin{whitebox}{WING}
+    \begin{highlightbox}{}
+        \begin{dmath*}
+            c_{M_{CG,W}}=c_{N_W}\left(\tilde{x}_{CG}-\tilde{x}_{AC, W}\right) \frac{1}{l_{ref}}+c_{T_W}\left(\tilde{z}_{CG}-\tilde{z}_{AC,W}\right) \frac{1}{l_{ref}}+c_{M_{AC, W}}
+        \end{dmath*}
+    \end{highlightbox}
+    
+    \blue{Properties}
+    \begin{itemize}
+        \item $\sfrac{dc_{M_{AC,W}}}{dc_L}= 0$
+    \end{itemize}
+    
+    \begin{highlightbox}{}
+        \begin{dmath}
+            \label{eq:long_stat_stab_deriv_wing}
+            \frac{dc_{M_{CG,W}}}{dc_L}=\left[\frac{dc_{N_W}}{d c_L}\left(\tilde{x}_{C G}-\tilde{x}_{AC,W}\right) \frac{1}{l_{ref}}+\frac{d c_{T_W}}{d c_L}\left(\tilde{z}_{CG}-\tilde{z}_{AC,W}\right) \frac{1}{l_{ref}}\right]
+        \end{dmath}
+    \end{highlightbox}
+    \begin{highlightbox}{}
+        \begin{align*}
+            c_{N_W}=c_{L_W}\cos(\alpha-\epsilon_W)+c_{D_W}\sin(\alpha-\epsilon_W)\\
+            c_{T_W}=c_{D_W}\cos(\alpha-\epsilon_W)-c_{L_W}\sin(\alpha-\epsilon_W)
+        \end{align*}
+    \end{highlightbox}
+    
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $c_D\ll c_L$
+        \item $\alpha,\epsilon\ll 1\Rightarrow c_N=c_L, c_T=c_D$ 
+    \end{itemize}
+    
+    \mathbox{
+        \frac{dc_{M_{CG,W}}}{dc_L}\overset{\scriptscriptstyle \eqref{eq:drag_coeff}, \eqref{eq:ind_drag_coeff}, \eqref{eq:k_factor}}{=}\left(\tilde{x}_{CG}-\tilde{x}_{A C,W}\right) \frac{1}{l_{ref}}\\
+        +c_L\left(\frac{2}{\pi ARe}-\frac{1}{\frac{dc_L}{d \alpha}}\right)\left(\tilde{z}_{C G}-\tilde{z}_{AC,W}\right)\frac{1}{l_{ref}}\\
+        \overset{\tilde{z}_{C G}\approx\tilde{z}_{AC,W}}{\approx}\left(\tilde{x}_{CG}-\tilde{x}_{A C,W}\right) \frac{1}{l_{ref}}
+    }
+\end{whitebox}
+
+\begin{whitebox}{HTP}
+    \begin{highlightbox}{}
+        \begin{dmath*}
+            c_{M_{CG,H}}=c_{N_H}\left(\tilde{x}_{CG}-\tilde{x}_{AC,H}\right) \frac{1}{l_{r e f}} \frac{S_H}{S_{ref}}+c_{T_H}\left(\tilde{z}_{CG}-\tilde{z}_{AC,H}\right) \frac{1}{l_{ref}} \frac{S_H}{S_{ref}}+c_{M_{AC,H}} \frac{\bar{c}_H}{l_{ref}} \frac{S_H}{S_{ref}}
+        \end{dmath*}
+    \end{highlightbox}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $c_{T_H}\approx 0$
+    \end{itemize}
+    
+    \blue{Properties}
+    \begin{itemize}
+        \item $\sfrac{dc_{M_{AC,H}}}{dc_L}= 0$
+    \end{itemize}
+    
+    \begin{highlightbox}{}
+        \begin{dmath}
+            \label{eq:long_stat_stab_deriv_htp}
+            \frac{dc_{M_{CG,H}}}{dc_L}=\frac{dc_{N_H}}{d c_L}\left(\tilde{x}_{CG}-\tilde{x}_{AC,H}\right) \frac{1}{l_{ref}} \frac{S_H}{S_{ref}}
+        \end{dmath}
+    \end{highlightbox}
+    \begin{highlightbox}{}
+        \begin{align}
+            \label{eq:tail_vol_coeff}
+            V_H=-\frac{\left(\tilde{x}_{CG}-\tilde{x}_{AC,H}\right)}{l_{ref}} \frac{S_H}{S_{ref}}
+        \end{align}
+    \end{highlightbox}
+    \begin{highlightbox}{}
+        \begin{align}
+            \label{eq:aoa_htp}
+            \alpha_H=\alpha_W-\epsilon+\epsilon_H-\epsilon_W
+        \end{align}
+    \end{highlightbox}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $c_{N_H}=\sfrac{dc_{N_H}}{d\alpha_H}\alpha_H$
+    \end{itemize}
+    
+    \mathbox{
+        \frac{dc_{M_{CG,H}}}{dc_L}=-\frac{dc_{L_\alpha,H}}{dc_{L_\alpha,W}}\left(1-\frac{d \epsilon}{d\alpha}\right)V_H
+    }
+    \blue{Assumptions}
+    \begin{itemize}
+        \item Ideal wing
+    \end{itemize}
+    \begin{highlightbox}{}
+        \begin{align*}
+            \frac{d\epsilon}{d\alpha}=\frac{2}{\pi AR}\frac{dc_L}{d\alpha}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+\begin{whitebox}{FUSELAGE}
+    \begin{highlightbox}{}
+        \begin{dmath*}
+            c_{M_{CG,F}}=c_{M_F}
+        \end{dmath*}
+    \end{highlightbox}
+    \begin{highlightbox}{}
+        \begin{align*}
+             \frac{dc_{M_{CG,F}}}{dc_L}=\frac{d c_{M_F}}{d c_L}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{PITCHING MOMENT COEFFICIENT}}
+    \resizebox{0.8\linewidth}{!}{
+        \includegraphics[
+        page = {3},
+        trim = {0.5cm, 1.0cm, 11.0cm, 7.0cm}, % left, bottom, right, top
+        clip
+        ]{Lecture06.pdf}
+    }
+
+    \begin{whitebox}{CONTRIBUTIONS}
+        \resizebox{1.0\linewidth}{!}{
+            \includegraphics[
+            trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+            clip
+            ]{Graph_Longit_Stat_Stab.pdf}
+        }
+
+        \mathbox{
+            c_{M_{CG}}=c_L(\Tilde{x}_{CG}-\Tilde{x}_{AC,W})\frac{1}{l_{ref}}+c_{M_{{AC},W}}\\
+            -c_L\frac{c_{L_{{\alpha},H}}}{c_{L_{{\alpha},W}}}\left(1-\frac{d\epsilon}{d\alpha}\right)\eta_HV_H\\
+            -c_{L_{\alpha,H}}\eta_HV_H(\alpha_{0,W}-\epsilon_W+\epsilon_H)+c_{M_F}
+        }
+    \end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{NEUTRAL POINT}}
+    \begin{highlightbox}{}
+        \begin{align}
+            &\frac{dc_{M_{CG}}}{dc_L}\biggr\rvert_{\tilde{x}_{CG}=\tilde{x}_{NP}}=0\\
+            \label{eq:neutral_pt}
+            &\Rightarrow\frac{\tilde{x}_{NP}}{l_{ref}}=\frac{\tilde{x}_{A C, W}}{l_{ref}}-\frac{dc_{M_F}}{d c_L}+\frac{c_{L_\alpha,H}}{c_{L_\alpha,W}}\eta_HV_H\left(1-\frac{d\epsilon}{d \alpha}\right)
+        \end{align}
+    \end{highlightbox}
+
+    \mathbox{
+        \frac{dc_{M_{CG}}}{dc_L}=\frac{\tilde{x}_{CG}-\tilde{x}_{NP}}{l_{ref}}
+    }
+
+    \begin{highlightbox}{STATIC MARGIN}
+        \begin{align*}
+            SM=-\frac{\tilde{x}_{CG}-\tilde{x}_{NP}}{MAC}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{CG LIMITS}}
+    \begin{whitebox}{ALL MOVING HTP}
+        \begin{highlightbox}{}
+        \begin{align*}
+            \alpha_W=\alpha_{0,W}+\frac{1}{c_{L_{\alpha},W}}c_L
+        \end{align*}
+    \end{highlightbox}
+    
+    \begin{highlightbox}{}
+        \begin{align*}
+            \alpha_H=\alpha_W-\epsilon-\epsilon_W+\epsilon_H-\Delta\epsilon_H
+        \end{align*}
+    \end{highlightbox}
+
+    \mathbox{
+            \Delta c_{M_{CG,\Delta\epsilon_H}}=-c_{L_{\alpha,H}}\eta_H V_H \Delta\epsilon_H
+        }
+    
+    \resizebox{0.9\linewidth}{!}{
+        \includegraphics[
+        trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+        clip
+        ]{Graph_HTP_Trim.pdf}
+    }
+    \end{whitebox}
+    
+    \begin{highlightbox}{HTP FLAPS}
+        \begin{align*}
+            &\alpha_H=\alpha_W-\epsilon-\epsilon_W+\epsilon_H-\tau\delta_e\\
+            &\frac{d\delta_e}{dc_L}=\frac{1}{\tau}\frac{\frac{dc_{M_{CG}}}{dc_L}}{c_{L_\alpha,H}V_H\eta_H}
+        \end{align*}
+    \end{highlightbox}
+    \begin{whitebox}{CG POS}
+        \centering
+        \resizebox{0.9\linewidth}{!}{
+            \includegraphics[
+            trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+            clip
+            ]{Graph_CG_Offset.pdf}
+        }
+    \end{whitebox}
+\end{whitebox}

@@ -1,0 +1,92 @@
+\section{AIR DATA MEASUREMENTS}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $L$ & $\unit{K.m^{-1}}$ & Laps rate & $-6.510^{-3}$\\
+        $T_0$ & $\unit{K}$ & Sea level temp. & $288.15\unit{K}=15\unit{\celsius}$\\
+        $H_0$ & $\unit{m}$ & Sea level\\
+        $\rho_0$ & $\unit{kg.m^{-3}}$ & Sea level air density & $1.225$\\
+        $\rho_h$ & $\unit{kg.m^{-3}}$ & Air density at alt. $h$\\
+        $p_0$ & $\unit{Pa}$ & Sea level pressure & $1015.25\cdot 10^2$\\
+        $P_{\max}$ & $\unit{W}$ & Max. sea level power\\
+        $P_{h,\max}$ & $\unit{W}$ & Max. power at alt. $h$\\
+        $p_{tot}$ & $\unit{Pa}$ & Total pressure\\
+        $p$ & $\unit{Pa}$ & Static pressure\\
+        $q$ & $\unit{Pa}$ & Dynamic pressure\\
+        $IAS$ & $\unit{m.s^{-1}}$ & Indicated airspeed\\
+        $TAS$ & $\unit{m.s^{-1}}$ & True airspeed\\
+        $EAS$ & $\unit{m.s^{-1}}$ & Equivalent airspeed\\
+        $CAS$ & $\unit{m.s^{-1}}$ & Calibrated airspeed\\
+        $\sigma$ & $-$ & Density ratio\\
+        $a$ & $\unit{m.s^{-1}}$ & Speed of sound
+    \end{tabularx}
+\end{whitebox}
+
+\begin{highlightbox}{\textbf{INTERNATIONAL STANDARD ATMOSPHERE}}
+    \begin{align*}
+        &T=T_0+L(H-H_0)\\
+        &\rho_h=\rho_0\left(1-2.2588 \cdot 10^{-5} h\right)^{4.256}\\
+        &P_{h,\max}=P_{\max}\left((1+c) \frac{\rho_h}{\rho_0}-c\right)\\
+        &c=\frac{1}{7.55}
+    \end{align*}
+\end{highlightbox}
+
+\begin{highlightbox}{\textbf{PRESSURE}}
+    \begin{align*}
+        &p_{tot}=p+q\\
+        &q=\frac{1}{2}\rho V^2
+    \end{align*}
+\end{highlightbox}
+
+\begin{whitebox}{\textbf{AIRSPEEDS}}
+    \blue{Conditions}
+    \begin{itemize}
+        \item Incompressible flow
+    \end{itemize}
+    \begin{highlightbox}{}
+        \begin{align*}
+            &IAS=\sqrt{\frac{2q}{\rho_0}}\\
+            &TAS=\sqrt{\frac{2q}{\rho_h}}\\
+            &\sigma=\frac{\rho_h}{\rho_0}\\
+            &EAS=TAS\sqrt{\frac{\rho_h}{\rho_0}}=TAS\sqrt{\sigma}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{COMPRESSIBLE FLOW}}
+    \blue{Assumption}
+    \begin{itemize}
+        \item $\gamma\approx 1.4$
+    \end{itemize}
+    
+    \blue{Condition}
+    \begin{itemize}
+        \item Subsonic flow
+    \end{itemize}
+    
+    \begin{highlightbox}{BERNOULLI EQUATION}
+        \begin{align*}
+            \frac{\gamma}{\gamma-1}\frac{p}{\rho}+\frac{1}{2}V^2=\text{const. }
+        \end{align*}
+    \end{highlightbox}
+    \begin{highlightbox}{IDEAL GAS (ISENTROPIC RELATION)}
+        \begin{align*}
+            \frac{p}{\rho^\gamma}=\frac{p_{tot}}{\rho_{tot}^\gamma}=\text{const.}
+        \end{align*}
+    \end{highlightbox}
+    \begin{highlightbox}{LAPLACE EQUATION}
+        \begin{align*}
+            &a=\sqrt{\gamma RT}=\sqrt{\gamma\frac{p}{\rho}}\\
+            &a_0=\sqrt{\gamma RT_0}
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        M^2=\frac{V^2}{a^2}=\frac{2}{\gamma-1}\left[\left(\frac{p_{tot}-p}{p}+1\right)^{\frac{\gamma}{\gamma-1}}-1\right]
+    }
+    \begin{highlightbox}{CALIBRATED AIRSPEED}
+        \begin{align*}
+            CAS^2=\frac{2a_0^2}{\gamma-1}\left[\left(\frac{p_{tot}-p}{p_0}+1\right)^{\frac{\gamma}{\gamma-1}}-1\right]
+        \end{align*}
+    \end{highlightbox}
+    
+\end{whitebox}

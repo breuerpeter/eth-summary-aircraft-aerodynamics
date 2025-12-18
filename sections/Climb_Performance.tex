@@ -1,0 +1,90 @@
+\section{CLIMB PERFORMANCE}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $V_{C,SL}$ & $\unit{m.s^{-1}}$ & Climb speed at sea level\\
+        $h_{ceil}$ & $\unit{m}$ & Absolute ceiling\\
+        $t_C$ & $-$ & Time to climb\\
+        $P_{req}$ & $\unit{W}$ & Required power
+    \end{tabularx}
+\end{whitebox}
+
+%\begin{whitebox}{}
+%    \begin{tabularx}{\columnwidth}{lclclc}
+%        $T$ & $\unit{N}$ & Thrust\\
+%        $m$ & $\unit{kg}$ & Mass\\
+%    \end{tabularx}
+%\end{whitebox}
+
+\begin{whitebox}{\textbf{STATIONARY CLIMB}}
+    \blue{Conditions}
+    \begin{itemize}
+        \item $\sfrac{d(\cdot)}{dt}=0$
+    \end{itemize}
+    
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $\alpha\approx0$
+        \item $\sigma\approx0$
+    \end{itemize}
+
+    \begin{highlightbox}{}
+    \begin{align*}
+        &T=D+mg\sin\gamma\\
+        &L=mg\cos\gamma
+    \end{align*}
+    \end{highlightbox}
+    
+    \mathbox{
+        P_s\overset{\scriptscriptstyle\eqref{eq:2d_eom_x},\eqref{eq:2d_eom_vertspeed}}{=}V\frac{T\cos(\alpha+\sigma)-D}{mg}\overset{\alpha+\sigma\ll1}{\approx}V\cdot\frac{T-D}{mg}
+    }
+    \mathbox{
+        &P_{avail}=TV\\
+        &P_{req}=DV\\
+        &P_S\overset{\alpha+\sigma\ll1}{\approx}\frac{P_{avail}-P_{req}}{mg}
+    }
+    \mathbox{
+        V_{C,max}=P_{s,max}
+    }   
+    \textbf{Note} Simplify calculation of $D$ by assuming \eqref{eq:stat_cruise_lift} i.e. $\gamma=0$
+
+    \begin{center}
+        \resizebox{0.8\linewidth}{!}{
+            \includegraphics[
+            page = {10},
+            trim = {1.2cm, 6.2cm, 11.0cm, 6.0cm}, % left, bottom, right, top
+            clip
+            ]{Lecture02.pdf}
+        }        
+    \end{center}
+
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+        trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+        clip
+        ]{Graph_SEP.pdf}
+    }
+
+    \begin{highlightbox}{CEILINGS}
+        \begin{align*}
+            V_C(h)=V_{C,SL}\left(1-\frac{h}{h_{ceil}}\right)
+        \end{align*}
+    \end{highlightbox}
+    
+    \resizebox{0.9\linewidth}{!}{
+        \includegraphics[
+        trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+        clip
+        ]{Graph_Ceilings.pdf}
+    }
+
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $V_C=V_C(h)$
+    \end{itemize}
+    \begin{highlightbox}{TIME TO CLIMB}
+        \begin{align*}
+            &t_C=\int_{h_0}^{h_1} \frac{1}{V_C(h)} d h=\ldots=\frac{1}{V_{C, S L}} \cdot \ln \left(\frac{1}{1-\frac{h}{h_{c e i l}}}\right)
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}

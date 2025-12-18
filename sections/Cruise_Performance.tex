@@ -1,0 +1,47 @@
+\section{CRUISE PERFORMANCE}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $T_{req}$ & $\unit{W}$ & Required power\\
+    \end{tabularx}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{STATIONARY LEVEL CRUISE FLIGHT}}
+    \blue{Conditions}
+    \begin{itemize}
+        \item $\gamma=0$
+        \item $\sfrac{d(\cdot)}{dt}=0$
+    \end{itemize}
+    
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $\alpha\approx0$
+        \item $\sigma\approx0$
+    \end{itemize}
+    
+    \begin{highlightbox}{}
+    \begin{align}
+        \label{eq:stat_cruise_thrust}
+        &T=D\\
+        \label{eq:stat_cruise_lift}
+        &L=mg
+    \end{align}
+    \end{highlightbox}
+
+    \mathbox{
+        D\overset{\scriptscriptstyle\eqref{eq:lift},\eqref{eq:drag},\eqref{eq:drag_coeff},\eqref{eq:ind_drag_coeff}}{=}\frac{1}{2}\rho V^2S_{ref}c_{D0}+k\cdot\frac{(mg)^2}{\frac{1}{2}\rho V^2S_{ref}}=T_{req}
+    }
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+            trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+            clip
+            ]{Graph_Drag_Bucket.pdf}
+    }
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+            trim = {0.0cm, 0.0cm, 1.0cm, 0.0cm}, % left, bottom, right, top
+            clip
+            ]{Graph_Max_Cruise.pdf}
+    }
+\end{whitebox}
+

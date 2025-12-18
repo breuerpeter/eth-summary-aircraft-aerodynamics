@@ -1,0 +1,475 @@
+\section{DYNAMIC STABILITY}
+
+\blue{Notation}
+\begin{itemize}
+    \item p.d. = partial derivative
+\end{itemize}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $(U,V,W)_1$ & $\unit{m.s^{-1}}$ & Stationary velocities\\
+        $(u,v,w)$ & $\unit{m.s^{-1}}$ & Velocity disturbances\\
+        $(P,Q,R)_1$ & $\unit{rad.s^{-1}}$ & Stationary angular velocities\\
+        $(p,q,r)$ & $\unit{rad.s^{-1}}$ & Angular velocity disturbances\\
+        $(\Psi,\Theta,\Phi)_1$ & $\unit{rad}$ & Stationary Euler angles\\
+        $(\tilde{\psi},\Tilde{\theta},\Tilde{\phi})$ & $\unit{rad}$ & Euler angle disturbances\\
+        $(F_{A})_{_{x1,y1,z1}}$ & $\unit{N}$ & Stationary aerodyn. forces\\
+        $(f_{A})_{_{x,y,z}}$ & $\unit{N}$ & Aerodyn. force disturbances\\
+        $(F_{T})_{_{x1,y1,z1}}$ & $\unit{N}$ & Stationary thrust forces\\
+        $(f_{T})_{_{x,y,z}}$ & $\unit{N}$ & Aerodyn. thrust disturbances\\
+        $(L,M,N)_{A_{1}}$ & $\unit{Nm}$ & Stationary aerodyn. mom.\\
+        $(l,m,n)_{A}$ & $\unit{Nm}$ & Aerodyn. mom. disturbances\\
+        $(L,M,N)_{T_{1}}$ & $\unit{Nm}$ & Stationary aerodyn. mom.\\
+        $(l,m,n)_{T}$ & $\unit{Nm}$ & Aerodyn. mom. disturbances\\
+        $c_z$ & $-$ & $z$-Force coeff.\\
+        $c_{z_1}$ & $-$ & Steady state $z$-force coeff.\\
+        $c_{z_\alpha}$ & $\unit{rad^{-1}}$ & $z$-Force coeff. p.d. w.r.t. $\alpha$\\
+        $c_{z_{\Dot{\alpha}}}$ & $\unit{s.rad^{-1}}$ & $z$-Force coeff. p.d. w.r.t. $\Dot{\alpha}$\\
+        $c_{z_q}$ & $\unit{s.rad^{-1}}$ & $z$-Force coeff. p.d. w.r.t. $q$\\
+        $c_{z_\delta}$ & $\unit{rad^{-1}}$ & $z$-Force coeff. p.d. w.r.t. $\delta$\\
+        $\delta$ & $\unit{rad}$ & Elevator deflection\\
+        $c_{L_1}$ & $-$ & Steady state lift force coeff.\\
+        $c_{L_\alpha}$ & $\unit{rad^{-1}}$ & Lift force coeff. p.d. w.r.t. $\alpha$\\
+        $c_{L_q}$ & $\unit{s.rad^{-1}}$ & Lift force coeff. p.d. w.r.t. $q$\\
+        $c_{L_\delta}$ & $\unit{rad^{-1}}$ & Lift force coeff. p.d. w.r.t. $\delta$\\
+        $c_{D_1}$ & $-$ & Steady state drag force coeff.\\
+        $c_{D_\alpha}$ & $\unit{rad^{-1}}$ & Drag force coeff. p.d. w.r.t. $\alpha$\\
+        $c_{D_q}$ & $\unit{s.rad^{-1}}$ & Drag force coeff. p.d. w.r.t. $q$\\
+        $c_{D_\delta}$ & $\unit{rad^{-1}}$ & Drag force coeff. p.d. w.r.t. $\delta$\\
+        $c_{M_1}$ & $-$ & Steady state pitching mom. coeff.\\
+        $c_{M_\alpha}$ & $\unit{rad^{-1}}$ & Pitching mom. coeff. p.d. w.r.t. $\alpha$\\
+        $c_{M_{\Dot{\alpha}}}$ & $\unit{s.rad^{-1}}$ & Pitching mom. coeff. p.d. w.r.t. $\Dot{\alpha}$\\
+        $c_{M_q}$ & $\unit{s.rad^{-1}}$ & Pitching mom. coeff. p.d. w.r.t. $q$\\
+        $c_{M_\delta}$ & $\unit{rad^{-1}}$ & Pitching mom. coeff. p.d. w.r.t. $\delta$\\
+        $c_{f_x}$ & $-$ & $x-$Force disturbance coeff.\\
+        $c_{f_z}$ & $-$ & $z-$Force disturbance coeff.\\
+        $\Tilde{l}$ & $-$ & Dimensionless length\\
+        $\tau$ & $-$ & Dimensionless time\\
+        $\Hat{t}$ & $\unit{s}$ & Reference time\\
+        $\Tilde{u}$ & $-$ & Dimensionless speed\\
+        $\mu$ & $-$ & Dimensionless mass\\
+        $i_y$ & $-$ & Dimensionless mom. of inertia\\
+        $\Tilde{\omega}$ & $\unit{rad}$ & Dimensionless angular frequency\\
+        $\omega$ & $\unit{rad.s^{-1}}$ & Angular frequency\\
+        $T$ & $\unit{s}$ & Period\\
+        $T_{\sfrac{1}{2}}$ & $\unit{s}$ & Half life\\
+    \end{tabularx}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{LINEARIZATION OF FLIGHT DYNAMICS}}
+    \begin{highlightbox}{}
+        \begin{tabularx}{\columnwidth}{lclclc}
+            $U=U_1+u$ & $V=V_1+v$ & $W=W_1+w$\\
+            $P=P_1+u$ & $Q=Q_1+v$ & $R=R_1+w$\\
+            $\psi=\Psi_1+\tilde{\psi}$ & $\theta=\Theta_1+\tilde{\theta}$ & $\phi=\Phi_1+\tilde{\phi}$\\
+            $F_{A_{x}}=F_{A_{x1}}+f_{A_x}$ & $F_{A_{y}}=F_{A_{y1}}+f_{A_y}$ & $F_{A_{z}}=F_{A_{z1}}+f_{A_z}$\\
+            $F_{T_{x}}=F_{T_{x1}}+f_{T_x}$ & $F_{T_{y}}=F_{T_{y1}}+f_{T_y}$ & $F_{T_{z}}=F_{T_{z1}}+f_{T_z}$\\
+            $L_{A}=L_{A_{1}}+l_{A}$ & $M_{A}=M_{A_{1}}+m_{A}$ & $N_{A}=N_{A_{1}}+n_{A}$\\
+            $L_{T}=L_{T_{1}}+l_{T}$ & $M_{T}=M_{T_{1}}+m_{T}$ & $N_{T}=N_{T_{1}}+n_{T}$
+        \end{tabularx}
+    \end{highlightbox}
+    \blue{Assumptions}\\
+    \begin{itemize}
+        \item Small disturbances: e.g. $\delta_1, \delta_2\Rightarrow\delta_1\delta_2\approx 0$
+        \item Small roll and pitch angle disturbances: $\phi,\theta\leq15\unit{\degree}$\\
+        $\Rightarrow\cos\theta=\cos\phi\approx 1, \sin\theta\approx\theta, \sin\phi\approx\phi$
+    \end{itemize}
+    \blue{Conditions}
+    \begin{itemize}
+        \item Zero initial sideslip: $V_1=0$
+        \item Zero initial roll angle: $\Phi_1=0$
+        \item Zero initial angular velocities:\\
+        $P_1=Q_1=R_1=0,\dot{\Psi}_1=\dot{\Theta}_1=\dot{\Phi}_1=0$
+    \end{itemize}
+    \blue{Properties}
+    \begin{itemize}
+        \item $\sin(a+b)=\sin a\sin b+\cos a\sin b$
+        \item $\cos(a+b)=\cos a\cos b+\sin a\sin b$
+    \end{itemize}
+
+    \begin{whitebox}{\textbf{STATIONARY FLIGHT}}
+        \blue{Conditions}
+        \begin{itemize}
+            \item Zero time derivative of stationary variables
+        \end{itemize}
+        
+        \begin{highlightbox}{FORCES}
+            \begin{align*}
+                &m(\dot{u}+W_1q)=-mg\theta\cos\Theta_1+f_{A_{x}}+f_{T_{x}}\\
+                &m(\dot{v}+U_1r-W_1p)=mg\phi\cos\Theta_1+f_{A_{y}}+f_{T_{y}}\\
+                &m(\dot{w}-U_1q)=-mg\theta\sin\Theta_1+f_{A_{z}}+f_{T_{z}}
+            \end{align*}
+        \end{highlightbox}
+        \begin{highlightbox}{MOMENTS}
+            \begin{align*}
+                &I_{xx}\dot{p}-I_{xz}\dot{r}=l_A+l_T\\
+                &I_{yy}\dot{q}=m_A+m_T\\
+                &I_{zz}\dot{r}-I_{xz}\dot{p}=n_A+n_T
+            \end{align*}
+        \end{highlightbox}
+        \begin{highlightbox}{KINEMATICS}
+            \begin{align*}
+                &p=\dot{\phi}-\dot{\psi}\sin\Theta_1\\
+                &q=\dot{\theta}\\
+                &r=\dot{\psi}\cos\Theta_1
+            \end{align*}
+        \end{highlightbox}
+    \end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{STABILITY AXIS SYSTEM}}
+    \resizebox{1.0\linewidth}{!}{
+    \includegraphics[
+    trim = {0.0cm, 7.5cm, 0.0cm, 7.5cm}, % left, bottom, right, top
+    clip
+    ]{Diagram_Stability_Axis.pdf}
+    }
+    
+    \blue{Conditions}
+    \begin{itemize}
+        \item $W_1=0$
+    \end{itemize}
+    
+    \begin{highlightbox}{}
+        \begin{align*}
+            &U=U_1+u\\
+            &V=V_1+v\\
+            &W=w
+        \end{align*}
+    \end{highlightbox}
+    
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $\sfrac{u}{U_1}\ll 1\Rightarrow\tan\alpha=\frac{W}{U}=\frac{w}{U_1+u}\approx\sfrac{w}{U_1}$\\
+        $\alpha\ll 1\Rightarrow\alpha\approx\sfrac{w}{U_1}\Rightarrow w\approx\alpha U_1\Rightarrow\Dot{w}\approx\Dot{\alpha}U_1$
+    \end{itemize}
+    
+    \mathbox{
+        &m\Dot{u}=-mg\theta\cos\Theta_1+f_{A_{x}}+f_{T_{x}}\\
+        &mU_1(\Dot{\alpha}-\Dot{\theta})=mg\theta\sin\Theta_1+f_{A_{z}}+f_{T_{z}}\\
+        &I_{yy}\Ddot{\theta}=m_A+m_T
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{MODELS OF FORCES \& MOMENTS}}
+
+\blue{Conditions}
+\begin{itemize}
+    \item Stability axis system
+\end{itemize}
+
+\blue{Assumptions}
+\begin{itemize}
+    \item $V^2\approx 0\Rightarrow \Tilde{V}\approx(U_1+u)^2+w^2$
+\end{itemize}
+
+\begin{whitebox}{$Z$-FORCES}
+    \begin{highlightbox}{}
+        \begin{align*}
+            &c_z=c_{z_1}+c_{z_\alpha}\alpha+c_{z_q}q+c_{z_\delta}\delta\\
+            &F_z=F_{z_1}+f_z=\frac{1}{2}\rho\Tilde{V}^2S_{ref}c_z
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        F_{z_1}=\frac{1}{2}\rho U_1^2S_{ref}c_{z_1}
+    }
+    \mathbox{
+        &f_z=\rho U_1uS_{ref}c_{z_1}\\
+        &+\frac{1}{2}\rho U_1^2S_{ref}(c_{z_\alpha}\alpha+c_{z_q}q+c_{z_\delta}\delta)+H.O.T.
+    }
+    \mathbox{
+        c_{f_z}=\frac{f_z}{\frac{1}{2}\rho U_1^2S_{ref}}=2c_{z_1}\frac{u}{U_1}+c_{z_\alpha}\alpha+c_{z_q}q+c_{z_\delta}\delta
+    }
+\end{whitebox}
+
+\begin{whitebox}{$X$-FORCES}
+    \begin{highlightbox}{}
+        \begin{align*}
+            F_x=L\sin\alpha+F_T\cos\sigma-D\cos\alpha
+        \end{align*}
+    \end{highlightbox}
+    
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $\sigma,\alpha\ll 1\Rightarrow\cos\sigma\approx 1,\cos\alpha\approx 1,\sin\alpha\approx\alpha$
+        \item Constant thrust $T\neq T(V)$ i.e. gliders \& jet engines
+    \end{itemize}
+    
+    \mathbox{
+        F_x&=F_{x_1}+f_x=F_T+L\alpha-D\\
+        &=F_{T_1}+f_T+\frac{1}{2}\rho((U_1+u)^2+w^2)S_{ref}(c_L\alpha-c_D)
+    }
+    
+    \begin{highlightbox}{}
+        \begin{align*}
+            &c_D=c_{D_1}+c_{D_\alpha}\alpha+c_{D_q}q+c_{D_\delta}\delta\\
+            &c_L=c_{L_1}+c_{L_\alpha}\alpha+c_{L_q}q+c_{L_\delta}\delta
+        \end{align*}
+    \end{highlightbox}
+    
+    \mathbox{
+        &F_{x_1}=F_{T_1}-\frac{1}{2}\rho U_1^2S_{ref}c_{D_1}
+    }
+    \mathbox{
+        f_x=-\rho U_1uS_{ref}c_{D_1}-\frac{1}{2}\rho U_1^2S_{ref}(c_{D_\alpha}-c_{L_1})\alpha+H.O.T.
+    }
+    \begin{highlightbox}{}
+        \begin{align*}
+            &c_{f_x}=\frac{f_x}{\frac{1}{2}\rho U_1^2S_{ref}}=-2c_{D_1}\frac{u}{U_1}-(c_{D_\alpha}-c_{L_1})\alpha\\
+            &c_{f_x}=c_{x_u}\frac{u}{U_1}+c_{x_\alpha}\alpha\\
+            &c_{x_u}=-2c_{D_1}\\
+            &c_{x_\alpha}=c_{L_1}-c_{D_\alpha}
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+\begin{whitebox}{PITCHING MOMENT}
+    \blue{Condition}
+    \begin{itemize}
+        \item Trimmed flight state: $c_{M_1}=0$
+    \end{itemize}
+    
+    \begin{highlightbox}{}
+        \begin{align*}
+            \frac{m'}{\frac{1}{2}\rho U_1^2S_{ref}l_{ref}}=c_{M_\alpha}\alpha+c_{M_q}q+c_{M_\delta}\delta
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{DIMENSIONLESS EOMS}}
+    \begin{whitebox}{REFERENCE VALUES}
+        \begin{highlightbox}{}
+            \begin{align*}
+                &\Tilde{l}=\frac{l}{l_{ref}}\\
+                &\tau=\frac{t}{\Hat{t}},\quad\Hat{t}=\frac{l_{ref}}{2U_1}\\
+                &\Tilde{u}=\frac{u}{U_1}\\
+                &\mu=\frac{2m}{\rho S_{ref}l_{ref}}\\
+                &i_y=\frac{I_{yy}}{\rho S_{ref}\left(\sfrac{l_{ref}}{2}\right)^2}
+            \end{align*}
+        \end{highlightbox}
+    \end{whitebox}
+    \begin{highlightbox}{}
+    \small
+        \begin{align*}
+            &2\mu\Dot{\Tilde{u}}-c_{x_u}\Tilde{u}-c_{x_\alpha}\alpha+c_{L_1}\theta=0\\
+            &2c_{L_1}\Tilde{u}+2\mu\Dot{\alpha}-c_{z_\alpha}\alpha-c_{z_{\Dot{\alpha}}}\Dot{\alpha}-    (2\mu+c_{z_q})\Dot{\theta}+c_{L_1}\theta\tan\Theta_1=c_{z_\delta}\delta\\
+            &-c_{M_{\Dot{\alpha}}}\Dot{\alpha}-c_{M_\alpha}\alpha+i_y\Ddot{\theta}-c_{M_q}\Dot{\theta}=c_{M_\delta}\delta
+        \end{align*}
+    \end{highlightbox}
+\end{whitebox}
+
+LONGITUDINAL DYNAMIC STABILITY FROM HERE
+
+\begin{whitebox}{\textbf{STABILITY DERIVATIVES}}
+    \begin{whitebox}{$X-$FORCE}
+        \mathbox{
+            &c_{x_u}=-2c_{D_1}\\
+            &c_{x_\alpha}=c_{L_1}-c_{D_\alpha}=c_{L_1}-c_{L_\alpha}\frac{dc_D}{dc_L}\overset{\scriptscriptstyle\eqref{eq:drag_coeff},\eqref{eq:ind_drag_coeff},\eqref{eq:k_factor}}{=}c_{L_1}-\frac{2c_{L_1}c_{L_\alpha}}{\pi ARe}
+        }DERIVATIONS TODO
+    \end{whitebox}
+    
+    \begin{whitebox}{$Z-$FORCE}
+        \mathbox{
+            &c_{z_\alpha}=-c_{L_\alpha}\\
+            &c_{L_q}=-c_{z_q}=2c_{L_{\alpha,H}}\eta_HV_H\\
+            &c_{z_{\Dot{\alpha}}}=-2\eta_HV_H\left(\frac{d\epsilon}{d\alpha}\right)c_{L_{\alpha,H}}\\
+            &c_{z_\delta}=-\eta_H\frac{S_H}{S_{ref}}c_{L_{\alpha,H}}\tau
+        }DERIVATIONS TODO
+    \end{whitebox}
+    
+    \begin{whitebox}{PITCHING MOMENT}
+        \mathbox{
+            &c_{M_\alpha}=\frac{dc_M}{dc_L}\frac{dc_L}{dc_\alpha}=\frac{\Tilde{x}_{CG}-\Tilde{x}_{NP}}{l_{ref}}c_{L_\alpha}\\
+            &c_{M_q}=-2c_{L_{\alpha,H}}\eta_HV_H\frac{l_H}{l_\mu}\\
+            &c_{M_{\Dot{\alpha}}}=c_{z_{\Dot{\alpha}}}\frac{l_H}{l_{ref}}=-2\eta_HV_H\left(\frac{d\epsilon}{d\alpha}\right)\frac{l_H}{l_{ref}}c_{L_{\alpha,H}}\\
+            &c_{M_\delta}=c_{z_\delta}\frac{l_H}{l_{ref}}=-\eta_H\frac{S_H}{S_{ref}}\frac{l_H}{l_{ref}}c_{L_{\alpha,H}}\tau
+        }
+    \end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{STATE SPACE REPRESENTATION}}
+    \begin{highlightbox}{LONGITUDINAL DYNAMICS}
+        \begin{align*}
+            &\text{$x-$Force}\quad &&C_1\Tilde{u}+C_2\Dot{\Tilde{u}}-C_3\alpha+C_4\theta=0\\
+            &\text{$z-$Force}\quad &&D_1\Tilde{u}+D_2\alpha-D_3\Dot{\alpha}+D_4\theta=-D_5\delta\\
+            &\text{$y-$Moment}\quad &&E_1\alpha+E_2\Dot{\alpha}+E_3\Dot{\theta}+E_4\Ddot{\theta}=-E_5\delta
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        &C_2\Dot{\Tilde{u}}=-C_1\Tilde{u}+C_3\alpha-C_4\theta\\
+        &D_3\Dot{\alpha}=D_1\Tilde{u}+D_2\alpha+D_4\theta+D_5\delta\\
+        &E_4\Ddot{\theta}=-E_1\alpha-E_2\Dot{\alpha}-E_3\Dot{\theta}-E_5\delta
+    }
+    \begin{highlightbox}{STATE \& INPUT VECTOR}
+        \begin{align*}
+            \Vec{x}=
+            \begin{bmatrix}
+                \Tilde{u}\\
+                \alpha\\
+                \theta\\
+                \Dot{\theta}
+            \end{bmatrix}\quad
+            \Vec{u}=
+            \begin{bmatrix}
+                \delta
+            \end{bmatrix}
+        \end{align*}
+    \end{highlightbox}
+    
+    A,B MATRICES TODO
+   
+    \begin{highlightbox}{ANSATZ}
+        \begin{align*}
+            &\Tilde{u}=u_1e^{\sigma t}\Rightarrow\Dot{\Tilde{u}}=u_1\sigma e^{\sigma t}\\
+            &\alpha=\alpha_1 e^{\sigma t}\Rightarrow\Dot{\alpha}=\alpha_1\sigma e^{\sigma t}\\
+            &\theta=\theta_1 e^{\sigma t}\Rightarrow\Dot{\theta}=\theta_1\sigma e^{\sigma t}\Rightarrow\Ddot{\theta}=\theta_1\sigma^2 e^{\sigma t}
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        &(C_1+C_2\sigma)u_1-C_3\alpha_1+C_4\theta_1=0\\
+        &D_1u_1+(D_2+D_3\sigma)\alpha_1-D_4\theta_1=0\\
+        &(E_1+E_2\sigma)\alpha_1+(E_3\sigma+E_4\sigma^2)\theta_1=0
+    }
+    \begin{whitebox}{CHARACTERISTIC EQUATION}
+        \begin{highlightbox}{}
+            \begin{align*}
+                &a_4\sigma^4+a_3\sigma^3+a_2\sigma^2+a_1\sigma+a_0=0\\
+                &a_4=1\\
+                &a_3=B+D\\
+                &a_2=C+BD+E\\
+                &a_1=DC+BE\\
+                &a_0=CE
+            \end{align*}
+        \end{highlightbox}
+        \mathbox{
+            (\sigma^2+B\sigma+C)(\sigma^2+D\sigma+E)=0
+        }
+        \begin{highlightbox}{ROOTS}
+            \begin{align*}
+                &\sigma_{1,2}=-n_{1,2}\pm i\omega_{1,2}\\
+                &\sigma_{3,4}=-n_{3,4}\pm i\omega_{3,4}
+            \end{align*}
+        \end{highlightbox}
+        \begin{highlightbox}{EXAMPLE SOLUTION}
+            \begin{dmath*}
+                \Tilde{u}=e^{-n_{1,2}\tau}(u_1e^{\omega_{1,2}i\tau}+u_2e^{-\omega_{1,2}i\tau})
+                +e^{-n_{3,4}\tau}(u_3e^{\omega_{3,4}i\tau}+u_4e^{-\omega_{3,4}i\tau})
+            \end{dmath*}
+        \end{highlightbox}
+    \end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{SHORT PERIOD MOTION}}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $u=$ const. $\Rightarrow$ no $x-$force equation
+        \item $c_{z_{\alpha}}\ll\mu$
+        \item $c_{z_{q}}\ll\mu$
+    \end{itemize}
+    
+    \mathbox{
+        &\text{$z-$Force} && 2\mu\Dot{\alpha}-c_{z_\alpha}\alpha-2\mu\Dot{\theta}+c_{L_1}\theta\tan\Theta_1=0\\
+        &\text{$y-$Moment} && -c_{M_{\Dot{\alpha}}}\Dot{\alpha}-c_{M_\alpha}\alpha+i_y\Ddot{\theta}-c_{M_q}\Dot{\theta}=0
+    }
+    
+    \begin{whitebox}{CHARACTERISTIC EQUATION}
+        \small{
+            \mathbox{
+                2\mu i_y\sigma^2-\left[c_{z_\alpha}i_y+2\mu(c_{M_q}+c_{M_{\Dot{\alpha}}})\right]\sigma+c_{z_\alpha}c_{M_q}-2\mu c_{M_\alpha}=0
+            }
+        }
+        \mathbox{
+            &\sigma=a\pm i\omega\\
+            &a=\frac{c_{z_\alpha}}{4\mu}+\frac{c_{M_q}+c_{M_{\Dot{\alpha}}}}{2i_y}=\frac{-c_{L_\alpha}}{4\mu}+\frac{c_{M_q}+c_{M_{\Dot{\alpha}}}}{2i_y}\\
+            &i\omega=\sqrt{-\left(\frac{c_{z_\alpha}}{4\mu}+\frac{c_{M_q}+c_{M_{\Dot{\alpha}}}}{2i_y}\right)^2-\left(\frac{2\mu c_{M_\alpha}-c_{z_\alpha}c_{M_q}}{2\mu i_y}\right)}
+        }
+    \end{whitebox}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{PHUGOID MOTION}}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $\alpha=$ const. $\Rightarrow c_L=$ const.\\
+        i.e. $\Dot{\alpha}=0\Rightarrow$ no $y-$moment equation 
+    \end{itemize}
+    
+    \mathbox{
+        &\text{$x-$Force} && 2\mu\Dot{\Tilde{u}}-c_{x_u}\Tilde{u}+c_{L_1}\theta=0\\
+        &\text{$z-$Force} && 2c_{L_1}\Tilde{u}-2\mu\Dot{\theta}=c_{z_\delta}\delta
+    }
+    \begin{whitebox}{CHARACTERISTIC EQUATION}
+        \mathbox{
+            \sigma^2+\frac{c_{x_u}}{2\mu}\sigma+\frac{c_{L_1}^2}{2\mu^2}=0
+        }
+        \mathbox{
+            &\sigma=a\pm i\omega\\
+            &a=-\frac{c_{x_u}}{4\mu}\\
+            &i\omega=\sqrt{\frac{c_{x_u}^2}{16\mu^2}-\frac{c_{L_1}^2}{2\mu^2}}
+        }
+  
+        \blue{Conditions}
+        \begin{itemize}
+            \item Gliders \& jet engines $\Rightarrow c_{x_u}=-2c_{D_1}$
+        \end{itemize}
+        
+        \mathbox{
+            &a=\frac{c_{D_1}}{2\mu}\\
+            &i\omega=\sqrt{\frac{c_{D_1}^2}{4\mu^2}-\frac{c_{L_1}^2}{2\mu^2}}
+        }
+        
+        \blue{Assumptions}
+        \begin{itemize}
+            \item $\frac{c_{L_1}^2}{2}\gg\frac{c_{D_1}^2}{4}$
+        \end{itemize}
+        
+        \mathbox{
+            \Tilde{\omega}=\frac{c_{L_1}}{\sqrt{2}\mu}
+        }
+        \mathbox{
+            &c_{L_1}=\frac{2mg}{\rho U_1^2S_{ref}}\\
+            &\omega=\frac{\Tilde{\omega}}{\Hat{t}}=\frac{\sqrt{2}g}{U_1}
+        }
+        \mathbox{
+            T=\frac{2\pi}{\omega}=\frac{\sqrt{2}\pi}{g}U_1\approx\frac{1}{2}U_1
+        }   
+        \mathbox{
+            \Tilde{T}_{\sfrac{1}{2}}=\frac{1}{a}\ln 2=\frac{2c_{L_1}U_1^2}{c_{D_1}l_{ref}g}\ln 2
+        }
+        \mathbox{
+            T_{\sfrac{1}{2}}=\Tilde{T}_{\sfrac{1}{2}}\Hat{t}=\frac{c_{L_1}}{c_{D_1}}\frac{U_1}{g}\ln 2
+        }  
+    \end{whitebox}
+\end{whitebox}
+
+LATERAL DIRECTIONAL DYNAMIC STABILITY FROM HERE
+
+\begin{whitebox}{\textbf{SPIRAL MODE}}
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+        page = {25},
+        trim = {7.5cm, 1.5cm, 5.0cm, 3.0cm}, % left, bottom, right, top
+        clip
+        ]{Lecture11.pdf}
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{ROLL SUBSIDENCE MODE}}
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+        page = {26},
+        trim = {1.5cm, 3.0cm, 7.0cm, 3.0cm}, % left, bottom, right, top
+        clip
+        ]{Lecture11.pdf}
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{DUTCH-ROLL MODE}}
+    \resizebox{1.0\linewidth}{!}{
+        \includegraphics[
+        page = {27},
+        trim = {1.5cm, 1.5cm, 3.0cm, 4.0cm}, % left, bottom, right, top
+        clip
+        ]{Lecture11.pdf}
+    }
+\end{whitebox}

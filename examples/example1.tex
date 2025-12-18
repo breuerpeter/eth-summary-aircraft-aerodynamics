@@ -1,0 +1,157 @@
+\section{SYSTEM THEORY}
+
+\begin{whitebox}{\textbf{MODELS OF DYNAMIC SYSTEMS}}
+    \begin{minipage}[c]{0.37\linewidth}
+        \blue{NL TI CT SS Model}
+        \mathboxplus{
+            \dot{x} &= g(x,u) \\
+            y &= h(x,u)
+        }
+    \end{minipage}
+    \begin{minipage}[c]{0.20\linewidth}
+        \mathbox{
+            x &\in \mathbb{R}^n \\
+            u &\in \mathbb{R}^m \\
+            y &\in \mathbb{R}^p
+        }
+    \end{minipage}
+    \begin{minipage}[c]{0.40\linewidth}
+        \mathbox{
+            g: \mathbb{R}^n \times \mathbb{R}^m &\to \mathbb{R}^n \\
+            h: \mathbb{R}^n \times \mathbb{R}^m &\to \mathbb{R}^p
+        }
+    \end{minipage}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{LINEARIZATION \& DISCRETIZATION}}
+    \begin{minipage}[c]{0.43\linewidth}
+        \blue{Taylor Expansion} around operating point $\bar{x}$ (first order) $f(x) \approx$
+        \mathbox{
+            f(\bar{x}) + \left. \frac{\partial f}{\partial x^\top} \right\rvert_{\bar{x}} (x-\bar{x})
+        }
+    \end{minipage}
+    \begin{minipage}[c]{0.55\linewidth}
+        \mathboxplus{
+            \dot{x} &=
+            \overbrace{\left. \textstyle\frac{\partial g}{\partial x^\top} \right\rvert_{\substack{x_s\\u_s}}}^{A^c \in \mathbb{R}^{n\times n}} \delta x +
+            \overbrace{\left. \textstyle\frac{\partial g}{\partial u^\top} \right\rvert_{\substack{x_s\\u_s}}}^{B^c \in \mathbb{R}^{n\times m}} \delta u \\
+            y &=
+            \underbrace{\left. \textstyle\frac{\partial h}{\partial x^\top} \right\rvert_{\substack{x_s\\u_s}}}_{C \in \mathbb{R}^{p\times n}} \delta x +
+            \underbrace{\left. \textstyle\frac{\partial h}{\partial u^\top} \right\rvert_{\substack{x_s\\u_s}}}_{D \in \mathbb{R}^{p \times m}} \delta u
+        }
+    \end{minipage}
+
+    \vspace{0.25em}
+    
+    \begin{minipage}[c]{0.20\linewidth}
+        \blue{Exact \break Solution} 
+    \end{minipage}
+    \begin{minipage}[c]{0.75\linewidth}
+        \mathbox{
+            x(t) = e^{A^c(t-t_0)}x_0 + \textstyle\int_{t_0}^{t}e^{A^c(t-\tau)}B^c u(\tau)d\tau
+        }
+    \end{minipage}
+
+    \begin{minipage}[c]{0.35\linewidth}
+        \blue{Euler Discretiz.}
+        \mathbox{
+            \dot{x}^c \!\approx\! \textstyle\frac{x^c(t + T_s)-x^c(t)}{T_s}
+        }
+    \end{minipage}
+    \begin{minipage}[c]{0.63\linewidth}
+        \mathboxplus{
+            x(k\!+\!1) \!&=\!
+            \overbrace{\mathbb{I} \!+\! T_s A^c}^{=A} \! x(k) \!+\!
+            \overbrace{T_s B^c}^{=B} \! u(k) \\
+            y(k) \!&=\!C x(k) + D u(k)
+        }
+    \end{minipage}
+
+    \vspace{0.25em}
+
+    \blue{Exact Discretization} assume $u$ constant over interval
+    \mathboxplus{
+        x(t_{k+1}) =
+        \underbrace{e^{A^c T_s}}_{=A} x(t_k) +
+        \underbrace{\textstyle\int_{0}^{T_s} e^{A^c(T_s - \tau)}B^c d\tau}_{B=(A^c)^{-1}(A-\mathbb{I})B^c} u(t_k)
+    }
+
+    \blue{DT LTI Solution}
+    \mathboxplus{
+        x(k+N) = A^N x(k) + \textstyle\sum_{i=0}^{N-1} A^i B u(k+N-1-i)
+    }
+
+\end{whitebox}
+
+\begin{whitebox}{\textbf{LINEAR SYSTEM ANALYSIS}}
+    \blue{DT Stability} $x(k+1) = Ax(k)$ stable iff $\lvert \lambda_j \rvert < 1, \forall j$ \\
+    \blue{LTI DT Controllability} can reach $x^*$ from $x(0)$ in $n$ steps
+    \mathbox{
+        \mathcal{C} =
+        \begin{bmatrix}
+            B & \cdots & A^{n-1} B
+        \end{bmatrix}
+        \ \Rightarrow \ \mathrm{rank}(\mathcal{C}) \overset{!}{=} n
+    }
+    \blue{DT Observability} uniquely distinguish IC from output
+    \mathbox{
+        \mathcal{O} =
+        \begin{bmatrix}
+            C^\top & \cdots & (CA^{n-1})^\top
+        \end{bmatrix}^\top
+        \ \Rightarrow \ \mathrm{rank}(\mathcal{O}) \overset{!}{=} n
+    }
+    \blue{Stabilizability} iff all uncontrollable modes stable
+    \mathbox{
+        \textrm{if } \mathrm{rank}([\lambda_j \mathbb{I}-A \mid B]) = n \ \forall \lambda_j \in \Lambda_A^+ \ \Rightarrow (A,B) \textrm{ stabilizable}
+    }
+    \blue{Detectablitiy} iff all unobservable modes stable
+    \mathbox{
+        \textrm{if } \mathrm{rank}([A^\top - \lambda_j \mathbb{I} \mid C^\top]) = n \ \forall \lambda_j \in \Lambda_A^+ \ \Rightarrow (A,C) \textrm{ detect.}
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{NONLINEAR SYSTEM ANALYSIS}}
+    \blue{Lyapunov Stability} (w.r.t \textbf{eq. point} $\bar{x}$ of a system)
+
+    \begin{minipage}[c]{0.53\linewidth}
+        \begin{highlightbox}{}
+            \footnotesize
+            \textbf{Lyapunov Stable} \\
+            for every $\epsilon>0$ exists $\delta(\epsilon)$ s.t.\\
+            $\lvert\lvert x(0) - \bar{x} \rvert\rvert < \delta(\epsilon) \to
+            \lvert\lvert x(k) - \bar{x} \rvert\rvert < \epsilon$
+        \end{highlightbox}
+    \end{minipage}
+    \begin{minipage}[c]{0.45\linewidth}
+        \begin{highlightbox}{}
+            \footnotesize
+            \textbf{Globally Asympt. Stable}\\
+            Lyap. stable \& Attractive \\
+            $\lim_{k\to\infty} \lvert\lvert x(k) - \bar{x} \rvert\rvert = 0 \ \forall x(0)$
+        \end{highlightbox}
+    \end{minipage}
+
+    \vspace{0.25em}
+
+    \blue{Global Lyapunov Function} (Candidate)
+    \begin{highlightbox}{}
+        \footnotesize
+        Consider eq point $\bar{x}=0$. $V:\mathbb{R}^n\to \mathbb{R}$, continuous at origin, finite $\forall x$, 
+        \begin{enumerate}[label=\textbf{(\arabic*)}]
+            \item $\lvert\lvert x \rvert\rvert \to \infty \Rightarrow V(x) \to \infty$
+            \item $V(0)=0, \quad V(x)>0 \quad \forall x \in \mathbb{R}^n \setminus\{0\}$
+            \item $V(g(x)) - V(x) \leq -\alpha(x) \quad \forall x \in \mathbb{R}^n$
+        \end{enumerate}
+        where $\alpha:\mathbb{R}^n\to \mathbb{R}$ continuous pos. def.
+    \end{highlightbox}
+
+    \blue{Global Lyapunov Stability} \\
+    \begin{highlightbox}{}
+        If sys admits a $V(x)$ $\Rightarrow$ $x=0$ is \textbf{Globally Asympt. Stable} 
+    \end{highlightbox}
+    
+    {\footnotesize
+        \blue{ACHTUNG} if $\alpha$ pos. \textbf{semi}def $\Rightarrow$ $x=0$ is \textbf{Globally Lyapunov Stable}
+    }
+\end{whitebox}

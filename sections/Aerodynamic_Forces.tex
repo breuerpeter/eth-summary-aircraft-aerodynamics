@@ -1,0 +1,39 @@
+\section{AERODYNAMIC FORCES}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $L$ & $\unit{N}$ & Lift force\\
+        $D$ & $\unit{N}$ & Drag force\\
+        $V$ & $\unit{m.s^{-1}}$ & Velocity\\
+        $\rho$ & $\unit{kg.m^{-3}}$ & Air density\\
+        $S_{ref}$ & $\unit{m^2}$ & Wing reference area\\
+        $c_L$ & $-$ & Lift coefficient\\
+        $c_D$ & $-$ & Drag coefficient\\
+        $c_{D0}$ & $-$ & Zero-lift drag coefficient\\
+        $c_{Di}$ & $-$ & Induced drag coefficient\\
+        $k$ & $-$ & $k$-Factor\\
+        $AR$ & $-$ & Aspect ratio\\
+        $e$ & $-$ & Oswald efficiency factor & $\in[0,1]$\\
+    \end{tabularx}
+\end{whitebox}
+
+
+\begin{highlightbox}{\textbf{LIFT \& DRAG}}
+    \begin{align}
+        \label{eq:lift}
+        &L=\frac{1}{2}\rho V^2S_{ref}c_L\\
+        \label{eq:drag}
+        &D=\frac{1}{2}\rho V^2S_{ref}c_D
+    \end{align}
+\end{highlightbox}
+
+\begin{highlightbox}{\textbf{QUADRATIC DRAG MODEL}}
+    \begin{align}
+        \label{eq:drag_coeff}
+        &c_D=c_{D0}+c_{Di}\\
+        \label{eq:ind_drag_coeff}
+        &c_{Di}=kc_L^2\\
+        \label{eq:k_factor}
+        &k=\frac{1}{\pi ARe}
+    \end{align}
+\end{highlightbox}

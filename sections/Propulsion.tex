@@ -1,0 +1,163 @@
+\section{PROPULSION}
+
+\resizebox{1.0\linewidth}{!}{
+    \includegraphics[
+    page = {5},
+    trim = {2.0cm, 5.0cm, 2.0cm, 3.5cm}, % left, bottom, right, top
+    clip
+    ]{Lecture03.pdf}
+}
+
+\begin{whitebox}{}
+    \begin{tabularx}{\columnwidth}{lclclc}
+        $\dot{m}$ & $\unit{kg.s^{-1}}$ & Air flow\\
+        $V_\infty$ / $V_0$ & $\unit{m.s^{-1}}$ & Freestream velocity\\
+        $p_\infty$ & $\unit{Pa}$ & Freestream pressure\\
+        $V_e$ / $V_3$ & $\unit{m.s^{-1}}$ & Exit velocity\\
+        $p_e$ & $\unit{Pa}$ & Exit pressure\\
+        $A_i$ & $\unit{m^2}$ & Inlet area\\
+        $A_e$ & $\unit{m^2}$ & Exit area\\
+        $\eta_{tot}$ & $-$ & Total efficiency\\
+        $\eta_t$ & $-$ & Thermal efficiency\\
+        $\eta_p$ & $-$ & Propulsive efficiency\\
+        $P_{m}$ & $\unit{W}$ & Engine mechanical output power\\
+        $\dot{m}_f$ & $\unit{kg.s^{-1}}$ & Fuel flow\\
+        $HV$ & $\unit{J.kg^{-1}}$ & Fuel heating value\\
+        $T_{avail}$ & $\unit{N}$ & Available thrust\\
+        $P_{avail}$ & $\unit{W}$ & Available power\\
+        $T_c$ & $-$ & Thrust coefficient\\
+        $A$ & $\unit{m^2}$ & Propeller disc area\\
+        $\eta_i$ & $-$ & Propeller efficiency\\
+        $w$ & $\unit{m.s^{-1}}$ & Velocity induced at propeller\\
+        $V_1$ & $\unit{m.s^{-1}}$ & Velocity at propeller disc\\
+    \end{tabularx}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{THRUST}}
+    \resizebox{1.0\linewidth}{!}{
+    \includegraphics[
+    page = {6},
+    trim = {12.0cm, 12.0cm, 2.0cm, 2.5cm}, % left, bottom, right, top
+    clip
+    ]{Lecture03.pdf}
+    }
+    \begin{highlightbox}{MOMENTUM}
+        \textbf{Note} Control surface $CS$
+        \begin{align}
+            \label{eq:thrust_momentum}
+            F_x=\oiint_{C S} V_x(\rho\vec{V}\cdot d\vec{A})=-\rho_{\infty} V_{\infty} V_{\infty} A_i+\rho_e V_e V_e A_e
+        \end{align}
+    \end{highlightbox}
+    \begin{highlightbox}{CONTINUITY}
+        \begin{align}
+            \label{eq:thrust_continuity}
+            \dot{m}=\rho_{\infty} V_{\infty} A_i=\rho_e V_e A_e=\text {const.}
+        \end{align}
+    \end{highlightbox}
+    \begin{highlightbox}{EXTERNAL FORCES}
+        \begin{align}
+            \label{eq:thrust_ext_forces}
+            F_x=T-(p_e-p_\infty)A_e
+        \end{align}
+    \end{highlightbox}
+    \begin{highlightbox}{EFFICIENCY}
+        \begin{align}
+            \label{eq:thrust_total_efficiency}
+            &\eta_{t o t}=\frac{T V}{\dot{m}_f H V}=\eta_t \eta_p\\
+            \label{eq:thrust_thermal_efficiency}
+            &\eta_t=\frac{P_m}{\dot{m}_f H V}\\
+            \label{eq:thrust_propulsive_efficiency}
+            &\eta_p=\frac{T V}{P_m}
+        \end{align}
+    \end{highlightbox}
+
+    \mathbox{
+        F_x=-\dot{m}V_\infty+\dot{m}V_e
+    }
+    \mathbox{
+        &T=\dot{m}(V_e-V_\infty)+(p_e-p_\infty)A_e\\
+        &\overset{p_e-p_\infty\approx 0}{\approx}\dot{m}(V_e-V_\infty)
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{ACTUATOR DISC THEORY}}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item Incompressible i.e. $\rho=$ const.
+        \item $V_1=$ const.
+        \item Uniform pressure over disc
+        \item No rotational effects
+    \end{itemize}
+    \centering
+    \resizebox{0.7\linewidth}{!}{
+    \includegraphics[
+    page = {11},
+    trim = {12.0cm, 6.0cm, 0.5cm, 2.5cm}, % left, bottom, right, top
+    clip
+    ]{Lecture03.pdf}
+    }
+    \begin{highlightbox}{THRUST}
+        \begin{align*}
+            T=A(p_2-p_1)
+        \end{align*}
+    \end{highlightbox}
+    \begin{highlightbox}{POWER}
+        \begin{align*}
+            P=2\rho Aw(V_0+w)^2
+        \end{align*}
+    \end{highlightbox}
+    \begin{highlightbox}{THRUST COEFFICIENT}
+        \begin{align*}
+            T_c=\frac{T}{\frac{1}{2}\rho V_0^2A}
+        \end{align*}
+    \end{highlightbox}
+        \begin{highlightbox}{BERNOULLI'S EQUATION}
+        \begin{align*}
+            p+\frac{1}{2}\rho V^2+\rho gh=\text{const.}
+        \end{align*}
+    \end{highlightbox}
+    \mathbox{
+        T\overset{\scriptscriptstyle\eqref{eq:thrust_momentum},\eqref{eq:thrust_continuity}}{=}\rho AV_1(V_3-V_0)
+    }
+    \mathbox{
+        T=\frac{\rho}{2}A(V_3^2-V_0^2)
+    }
+    \mathbox{
+        &V_1=\frac{V_3+V_0}{2}=V_0+w\\
+        &V_3=2V_1-V_0=V_0+2w
+    }
+    \mathbox{
+        T=\rho A(V_0+w)\cdot 2w
+    }
+    \mathbox{
+        &P=T(V_0+w)\\
+        &P_{use}=TV_0\\
+        &P_{ind}=Tw
+    }
+    \mathbox{
+        w=-\frac{V_0}{2}+\sqrt{\left(\frac{V_0}{2}\right)^2+\frac{1}{2 \rho} \frac{T}{A}}
+    }
+    \mathbox{
+        \eta_i=\frac{P_{use}}{P}=\frac{2}{1+\sqrt{1+T_c}}
+    }
+\end{whitebox}
+
+\begin{whitebox}{\textbf{TURBOJET MODEL}}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $T_{avail}=$ const.
+    \end{itemize}
+\end{whitebox}
+
+\begin{whitebox}{\textbf{TURBOPROP MODEL}}
+    \blue{Assumptions}
+    \begin{itemize}
+        \item $P_{avail}=$ const.
+    \end{itemize}
+\end{whitebox}
+
+\begin{highlightbox}{\textbf{POWER}}
+    \begin{align*}
+        P_{avail}=T_{avail}V
+    \end{align*}
+\end{highlightbox}
